@@ -7,6 +7,14 @@ const taskList = document.getElementById("taskList");
 
 addTaskBtn.addEventListener("click", addTask);
 
+/* Add an event listener for pressing the Enter key */
+taskInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+        event.preventDefault(); // Prevent any default behavior like form submission
+        addTask(); // Call the addTask function
+    }
+});
+
 /*adding a new task*/
 function addTask() {
     const taskText = taskInput.value.trim();
