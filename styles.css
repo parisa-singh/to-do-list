@@ -1,87 +1,67 @@
+/* Base styling */
 body {
     font-family: Arial, sans-serif;
     display: flex;
-    justify-content: center;
-    align-items: center;
     height: 100vh;
     background: linear-gradient(to right, #99a7ff, #c4d7fa);
 }
 
+/* Main container */
 .container {
-    background: white;
+    width: 70%;
     padding: 20px;
+    background: white;
     border-radius: 10px;
     box-shadow: 0 4px 8px #00138b;
-    width: 300px;
+    margin: auto;
 }
 
-h1 {
-    text-align: center;
-    font-size: 24px;
-}
-
-.input-section {
+/* Columns for tasks */
+.columns {
     display: flex;
-    gap: 10px;
-}
-
-input {
-    flex: 1;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-button {
-    padding: 8px 12px;
-    border: none;
-    background-color: #28a745;
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #218838;
-}
-
-ul {
-    list-style: none;
-    padding: 0;
+    justify-content: space-between;
+    gap: 20px;
     margin-top: 20px;
 }
 
+.column {
+    flex: 1;
+    background: #f9f9f9;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.column h2 {
+    text-align: center;
+}
+
+.task-list {
+    list-style: none;
+    padding: 0;
+}
+
+/* Sidebar styling */
+.sidebar {
+    width: 30%;
+    background: #f0f0f0;
+    padding: 10px;
+    border-left: 2px solid #ddd;
+    overflow-y: auto;
+}
+
+.sidebar h2 {
+    text-align: center;
+}
+
+/* Individual task styling */
 li {
+    background: #eee;
+    padding: 8px;
+    margin-bottom: 5px;
+    border-radius: 5px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #eee;
-    padding: 8px;
-    border-radius: 5px;
-    margin-top: 5px;
-}
-
-.edit, .delete {
-    border: none;
-    padding: 5px;
-    cursor: pointer;
-}
-
-.edit {
-    background: #ffc107;
-    color: white;
-    margin-right: 5px;
-}
-
-.delete {
-    background: #dc3545;
-    color: white;
-}
-
-.edit:hover {
-    background: #e0a800;
-}
-
-.delete:hover {
-    background: #c82333;
+    cursor: grab;
 }

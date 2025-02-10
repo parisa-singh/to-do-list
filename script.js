@@ -1,77 +1,134 @@
-document.addEventListener("DOMContentLoaded", loadTasks); /*ensures that the function loadTasks() runs once the page has fully loaded*/
+document.addEventListener("DOMContentLoaded", loadTasks);
 
-/*store references to HTML elements*/
-const taskInput = document.getElementById("taskInput");
+const taskTitleInput = document.getElementById("taskTitleInput");
+const taskDescriptionInput = document.getElementById("taskDescriptionInput");
 const addTaskBtn = document.getElementById("addTaskBtn");
-const taskList = document.getElementById("taskList");
+
+const todoList = document.getElementById("todoList");
+const inProgressList = document.getElementById("inProgressList");
+const doneList = document.getElementById("doneList");
+
+const deletedTasksList = document.getElementById("deletedTasksList");
 
 addTaskBtn.addEventListener("click", addTask);
 
-/*adding a new task*/
 function addTask() {
-    const taskText = taskInput.value.trim();
-    if (taskText === "") return;
+    const title = taskTitleInput.value.trim();
+    const description = taskDescriptionInput.value.trim();
+    if (title === "") return;
 
-    const task = { text: taskText, id: Date.now() };
+    const task = { id: Date.now(), title, description, column: "todo" };
     const tasks = getTasks();
     tasks.push(task);
     saveTasks(tasks);
 
-    taskInput.value = "";
+    taskTitleInput.value = "";
+    taskDescriptionInput.value = "";
     renderTasks();
 }
 
-/*rendering tasks*/
 function renderTasks() {
-    taskList.innerHTML = "";
+    clearColumns();
     const tasks = getTasks();
 
     tasks.forEach(task => {
         const li = document.createElement("li");
-        li.innerHTML = `
-            <span>${task.text}</span>
-            <div>
-                <button class="edit" onclick="editTask(${task.id})">Edit</button>
-                <button class="delete" onclick="deleteTask(${task.id})">Delete</button>
-            </div>
-        `;
-        taskList.appendChild(li);
+        li.innerHTML = `<strong>${task.title}</strong>`;
+        li.draggable = true;
+
+        li.addEventListener("click", () => alert(task.description));
+        li.addEventListener("dragstart", (e) => e.dataTransfer.setData("text/plain", task.id));
+
+        getColumn(task.column).appendChild(li);
+    });
+
+    renderDeletedTasks();
+}
+
+function renderDeletedTasks() {
+    const deletedTasks = getDeletedTasks();
+    deletedTasksList.innerHTML = "";
+
+    deletedTasks.forEach(task => {
+        const li = document.createElement("li");
+        li.textContent = task.title;
+
+        li.addEventListener("click", () => restoreTask(task.id));
+        deletedTasksList.appendChild(li);
     });
 }
 
-/*deleting a task*/
 function deleteTask(taskId) {
-    let tasks = getTasks();
-    tasks = tasks.filter(task => task.id !== taskId);
-    saveTasks(tasks);
-    renderTasks();
-}
-
-/*editing a task*/
-function editTask(taskId) {
-    let tasks = getTasks();
+    const tasks = getTasks();
     const taskIndex = tasks.findIndex(task => task.id === taskId);
-    if (taskIndex === -1) return;
 
-    const newTaskText = prompt("Edit your task:", tasks[taskIndex].text);
-    if (newTaskText !== null && newTaskText.trim() !== "") {
-        tasks[taskIndex].text = newTaskText.trim();
+    if (taskIndex !== -1) {
+        const deletedTasks = getDeletedTasks();
+        deletedTasks.push(tasks.splice(taskIndex, 1)[0]);
+        saveDeletedTasks(deletedTasks);
         saveTasks(tasks);
         renderTasks();
     }
 }
 
-/*retrieving tasks from local storage*/
+function restoreTask(taskId) {
+    const deletedTasks = getDeletedTasks();
+    const taskIndex = deletedTasks.findIndex(task => task.id === taskId);
+
+    if (taskIndex !== -1) {
+        const tasks = getTasks();
+        tasks.push(deletedTasks.splice(taskIndex, 1)[0]);
+        saveDeletedTasks(deletedTasks);
+        saveTasks(tasks);
+        renderTasks();
+    }
+}
+
+function getColumn(column) {
+    return column === "todo" ? todoList : column === "in-progress" ? inProgressList : doneList;
+}
+
+function clearColumns() {
+    todoList.innerHTML = "";
+    inProgressList.innerHTML = "";
+    doneList.innerHTML = "";
+}
+
 function getTasks() {
     return JSON.parse(localStorage.getItem("tasks")) || [];
 }
 
-/*saving tasks from local storage*/
 function saveTasks(tasks) {
     localStorage.setItem("tasks", JSON.stringify(tasks));
 }
 
-/*loading tasks on page load*/
+function getDeletedTasks() {
+    return JSON.parse(localStorage.getItem("deletedTasks")) || [];
+}
+
+function saveDeletedTasks(tasks) {
+    localStorage.setItem("deletedTasks", JSON.stringify(tasks));
+}
+
 function loadTasks() {
     renderTasks();
+}
+
+document.querySelectorAll(".task-list").forEach(list => {
+    list.addEventListener("dragover", (e) => e.preventDefault());
+    list.addEventListener("drop", (e) => {
+        const taskId = parseInt(e.dataTransfer.getData("text/plain"));
+        moveTask(taskId, list.id.replace("List", "").toLowerCase());
+    });
+});
+
+function moveTask(taskId, column) {
+    const tasks = getTasks();
+    const taskIndex = tasks.findIndex(task => task.id === taskId);
+
+    if (taskIndex !== -1) {
+        tasks[taskIndex].column = column;
+        saveTasks(tasks);
+        renderTasks();
+    }
 }
