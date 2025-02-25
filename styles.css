@@ -3,8 +3,10 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 90vh;
     background: linear-gradient(to right, #99a7ff, #c4d7fa);
+    margin: 0;
+    padding-top: 30px;
 }
 
 .container {
@@ -12,7 +14,10 @@ body {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px #00138b;
-    width: 300px;
+    width: 450px;
+    flex-direction: column; /* prevents expansion*/
+    align-items: center; 
+    justify-content: center;
 }
 
 h1 {
@@ -23,11 +28,12 @@ h1 {
 .input-section {
     display: flex;
     gap: 10px;
+    margin-bottom: 20px;
 }
 
 input {
     flex: 1;
-    padding: 8px;
+    padding: 15px;
     border: 1px solid #ccc;
     border-radius: 5px;
 }
@@ -41,6 +47,15 @@ button {
     cursor: pointer;
 }
 
+button:disabled {
+    background-color: #b3b3b3;
+    cursor: not-allowed;
+}
+
+button:disabled:hover {
+    background-color: #4d4949; /
+}
+
 button:hover {
     background-color: #218838;
 }
@@ -48,7 +63,7 @@ button:hover {
 ul {
     list-style: none;
     padding: 0;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 li {
@@ -57,13 +72,21 @@ li {
     align-items: center;
     background: #eee;
     padding: 8px;
-    border-radius: 5px;
+    border-radius: 10px;
     margin-top: 5px;
+    height: 80px;
+    transition: transform 0.2s ease-in-out;
+}
+
+li.completed span {
+    text-decoration: line-through;
+    color: gray;
 }
 
 .edit, .delete {
     border: none;
-    padding: 5px;
+    padding-top: 5px;
+    padding: 8px;
     cursor: pointer;
 }
 
@@ -71,6 +94,7 @@ li {
     background: #ffc107;
     color: white;
     margin-right: 5px;
+    margin-top: 10px;
 }
 
 .delete {
@@ -84,4 +108,42 @@ li {
 
 .delete:hover {
     background: #c82333;
+}
+
+#clearAllBtn {
+    width: 100%;
+    background: #ff4d4d;
+    margin-top: 10px;
+}
+
+#clearAllBtn:hover {
+    background: #cc0000;
+}
+
+
+/* TASK LIST INSIDE THE BOX */
+#taskList {
+    list-style: none;
+    padding: 0;
+    margin-top: 10px;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto; 
+    scrollbar-width: thin;
+    scrollbar-color: #999 #eee;
+}
+
+/* scrollbar */
+#taskList::-webkit-scrollbar {
+    width: 6px;
+}
+
+#taskList::-webkit-scrollbar-thumb {
+    background-color: #999;
+    border-radius: 10px;
+}
+
+#taskList::-webkit-scrollbar-track {
+    background-color: #eee;
+    border-radius: 10px;
 }
