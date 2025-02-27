@@ -1,50 +1,100 @@
+/* Import Google Font for a clean, modern look */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Poppins', sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 90vh;
-    background: linear-gradient(to right, #99a7ff, #c4d7fa);
+    height: 100vh;
+    width: 100vw;
+    background: linear-gradient(to right, #a18cd1, #fbc2eb);
     margin: 0;
-    padding-top: 30px;
 }
 
 .container {
-    background: white;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.15);
+    width: 90%;
+    max-width: 1000px;
+    height: 90vh;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+/* Left Section - Input Fields */
+.left-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 15px;
     padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px #00138b;
-    width: 450px;
-    flex-direction: column; /* prevents expansion*/
-    align-items: center; 
-    justify-content: center;
 }
 
 h1 {
-    text-align: center;
     font-size: 24px;
+    color: #5a189a;
+    text-align: center;
 }
 
 .input-section {
+    width: 100%;
     display: flex;
+    flex-direction: column;
     gap: 10px;
-    margin-bottom: 20px;
 }
 
 input {
-    flex: 1;
-    padding: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    outline: none;
+    transition: all 0.3s ease-in-out;
+}
+
+input:focus {
+    border-color: #a18cd1;
+    box-shadow: 0px 0px 8px rgba(161, 140, 209, 0.5);
+}
+
+/* Date & Time Section */
+.date-time-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+.date-time-section label {
+    font-weight: bold;
+    color: #5a189a;
 }
 
 button {
-    padding: 8px 12px;
+    width: 100%;
+    padding: 12px;
     border: none;
-    background-color: #28a745;
+    background-color: #5a189a;
     color: white;
-    border-radius: 5px;
+    border-radius: 8px;
+    font-size: 16px;
     cursor: pointer;
+    transition: all 0.3s ease-in-out;
 }
 
 button:disabled {
@@ -52,54 +102,103 @@ button:disabled {
     cursor: not-allowed;
 }
 
-button:disabled:hover {
-    background-color: #4d4949; /
-}
-
 button:hover {
-    background-color: #218838;
+    background-color: #461279;
 }
 
-ul {
+/* Right Section - Task List */
+.right-section {
+    flex: 1.5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    width: 100%;
+}
+
+#taskList {
     list-style: none;
-    padding: 0;
-    margin-top: 10px;
+    width: 100%;
+    max-height: 70vh;
+    overflow-y: auto;
+    padding: 10px;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
 }
 
+/* Task List Items */
 li {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    background: #eee;
-    padding: 8px;
-    border-radius: 10px;
-    margin-top: 5px;
-    height: 80px;
-    transition: transform 0.2s ease-in-out;
+    justify-content: space-between;
+    background: #f8f9fa;
+    padding: 12px;
+    border-radius: 8px;
+    margin-top: 8px;
+    transition: transform 0.2s ease-in-out, background 0.3s ease;
+    position: relative;
 }
 
-li.completed span {
-    text-decoration: line-through;
+li:hover {
+    transform: scale(1.02);
+    background: #e8defb;
+}
+
+.task-text {
+    flex: 2;
+    font-size: 16px;
+}
+
+.task-date {
+    font-size: 12px;
     color: gray;
+    text-align: right;
 }
 
-.edit, .delete {
+/* Buttons inside tasks */
+.task-buttons {
+    display: none; /* Initially hidden */
+    gap: 10px;
+    height: 40px;
+    position: absolute;
+    right: 200px;
+}
+
+li:hover .task-buttons {
+    display: flex; /* Show only on hover */
+}
+
+/* Styling for action buttons */
+.complete, .edit, .delete {
     border: none;
-    padding-top: 5px;
-    padding: 8px;
+    padding: 8px 12px;
     cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: all 0.3s ease-in-out;
+    width: 40px;
+    height: 40px;
+    display: flex;
+}
+
+.complete {
+    background: #007bff;
+    color: white;
 }
 
 .edit {
     background: #ffc107;
     color: white;
-    margin-right: 5px;
-    margin-top: 10px;
 }
 
 .delete {
     background: #dc3545;
     color: white;
+}
+
+.complete:hover {
+    background: #0056b3;
 }
 
 .edit:hover {
@@ -110,40 +209,25 @@ li.completed span {
     background: #c82333;
 }
 
-#clearAllBtn {
-    width: 100%;
-    background: #ff4d4d;
-    margin-top: 10px;
+/* Completed Task Styling */
+.completed-task {
+    text-decoration: line-through;
+    color: gray;
 }
 
-#clearAllBtn:hover {
-    background: #cc0000;
-}
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        width: 95%;
+        height: auto;
+    }
 
+    .left-section, .right-section {
+        width: 100%;
+    }
 
-/* TASK LIST INSIDE THE BOX */
-#taskList {
-    list-style: none;
-    padding: 0;
-    margin-top: 10px;
-    width: 100%;
-    max-height: 200px;
-    overflow-y: auto; 
-    scrollbar-width: thin;
-    scrollbar-color: #999 #eee;
-}
-
-/* scrollbar */
-#taskList::-webkit-scrollbar {
-    width: 6px;
-}
-
-#taskList::-webkit-scrollbar-thumb {
-    background-color: #999;
-    border-radius: 10px;
-}
-
-#taskList::-webkit-scrollbar-track {
-    background-color: #eee;
-    border-radius: 10px;
+    #taskList {
+        max-height: 40vh;
+    }
 }

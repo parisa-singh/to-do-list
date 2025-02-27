@@ -1,4 +1,4 @@
-/* Ensures that the function loadTasks() runs once the page has fully loaded */
+/* Ensures tasks load on page refresh */
 document.addEventListener("DOMContentLoaded", loadTasks);
 
 /* Stores references to HTML elements */
@@ -9,34 +9,31 @@ const addTaskBtn = document.getElementById("addTaskBtn");
 const taskList = document.getElementById("taskList");
 const clearAllBtn = document.getElementById("clearAllBtn");
 
+/* Event Listeners */
 addTaskBtn.addEventListener("click", addTask);
 taskInput.addEventListener("input", toggleAddButton);
 taskDate.addEventListener("input", toggleAddButton);
+taskTime.addEventListener("input", toggleAddButton);
 taskList.addEventListener("click", handleTaskClick);
 clearAllBtn.addEventListener("click", clearAllTasks);
 
-/* Adds an event listener for pressing the Enter key */
-taskInput.addEventListener("keydown", (event) => {
-    if (event.key === "Enter") {
-        event.preventDefault();
-        addTask();
-    }
-});
-
-/* Enables/Disables the Add button */
+/* Enables/Disables Add button */
 function toggleAddButton() {
     addTaskBtn.disabled = taskInput.value.trim() === "";
 }
 
-/* Adding a new task */
+/* Adds a new task */
 function addTask() {
     const taskText = taskInput.value.trim();
-    const dueTime = taskTime.value || "-- : --";
+    const dueTime = taskTime.value || "--:--";
     let dueDate = taskDate.value || "-- -- ----";
 
-    if (!taskText) return; // Prevent adding empty tasks
+    if (!taskText) {
+        alert("Task cannot be empty!");
+        return;
+    }
 
-    // Convert the date to MM-DD-YYYY format if valid
+    // Convert date to MM-DD-YYYY format if valid
     if (taskDate.value) {
         let dateObj = new Date(taskDate.value);
         let month = String(dateObj.getMonth() + 1).padStart(2, "0");
@@ -45,35 +42,22 @@ function addTask() {
         dueDate = `${month}-${day}-${year}`;
     }
 
-    const task = { 
-        text: taskText, 
-        id: Date.now(), 
-        completed: false,
-        dueTime: dueTime,
-        dueDate: dueDate
-    };
-
+    const task = { text: taskText, id: Date.now(), completed: false, dueTime, dueDate };
     const tasks = getTasks();
     tasks.push(task);
-    
-    // Sorting: Tasks with no due date stay at the bottom
-    tasks.sort((a, b) => {
-        if (a.dueDate === "-- -- ----") return 1;
-        if (b.dueDate === "-- -- ----") return -1;
-        return new Date(a.dueDate) - new Date(b.dueDate);
-    });
 
     saveTasks(tasks);
+    renderTasks();
 
     // Clear input fields
     taskInput.value = "";
     taskDate.value = "";
     taskTime.value = "";
     toggleAddButton();
-    renderTasks();
 }
 
-/* Rendering tasks */
+/* Renders tasks */
+/* Renders tasks */
 function renderTasks() {
     taskList.innerHTML = "";
     const tasks = getTasks();
@@ -81,15 +65,13 @@ function renderTasks() {
     tasks.forEach(task => {
         const li = document.createElement("li");
         li.dataset.id = task.id;
-        li.classList.toggle("completed", task.completed);
 
         li.innerHTML = `
-            <div class="task-info">
-                <span>${task.text}</span>
-                <div>
-                    <button class="edit">Edit</button>
-                    <button class="delete">Delete</button>
-                </div>
+            <span class="task-text ${task.completed ? 'completed-task' : ''}">${task.text}</span>
+            <div class="task-buttons">
+                <button class="complete">${task.completed ? "🔄" : "✔️"}</button>
+                <button class="edit">✏️</button>
+                <button class="delete">🗑️</button>
             </div>
             <span class="task-date"><strong>Due:</strong> ${task.dueTime} , ${task.dueDate}</span>
         `;
@@ -98,98 +80,69 @@ function renderTasks() {
     });
 }
 
-/* Handling task clicks (Edit, Delete, Toggle Complete) */
+
+/* Handles task actions */
 function handleTaskClick(event) {
     const li = event.target.closest("li");
     if (!li) return;
-
     const taskId = Number(li.dataset.id);
     let tasks = getTasks();
     const taskIndex = tasks.findIndex(task => task.id === taskId);
 
     if (event.target.classList.contains("delete")) {
         deleteTask(taskId);
-    } else if (event.target.classList.contains("edit")) {
-        editTask(taskId);
-    } else if (event.target.classList.contains("save")) {
-        saveEditedTask(taskId, li.querySelector(".edit-input"), event.target);
-    } else {
+    } else if (event.target.classList.contains("complete")) {
         tasks[taskIndex].completed = !tasks[taskIndex].completed;
         saveTasks(tasks);
         renderTasks();
+    } else if (event.target.classList.contains("edit")) {
+        editTask(taskId);
     }
 }
 
 /* Editing a task */
 function editTask(taskId) {
     let tasks = getTasks();
-    const taskIndex = tasks.findIndex(task => task.id === taskId);
+    let taskIndex = tasks.findIndex(task => task.id === taskId);
+
     if (taskIndex === -1) return;
 
-    const li = document.querySelector(`li[data-id="${taskId}"]`);
-    const taskTextSpan = li.querySelector("span"); 
-    const editButton = li.querySelector(".edit"); 
+    // Prompt user for new task text
+    let newTaskText = prompt("Edit your task:", tasks[taskIndex].text);
 
-    const inputField = document.createElement("input");
-    inputField.type = "text";
-    inputField.value = tasks[taskIndex].text;
-    inputField.classList.add("edit-input");
-
-    taskTextSpan.replaceWith(inputField);
-    inputField.focus();
-
-    // Changes the edit button text to "Save"
-    editButton.textContent = "Save";
-    editButton.classList.add("save");
-
-    inputField.addEventListener("blur", () => saveEditedTask(taskId, inputField, editButton));
-
-    inputField.addEventListener("keydown", (event) => {
-        if (event.key === "Enter") {
-            saveEditedTask(taskId, inputField, editButton);
-        }
-    });
-}
-
-/* Saving an edited task */
-function saveEditedTask(taskId, inputField, editButton) {
-    let tasks = getTasks();
-    const taskIndex = tasks.findIndex(task => task.id === taskId);
-    if (taskIndex === -1) return;
-
-    const newText = inputField.value.trim();
-    if (newText !== "") {
-        tasks[taskIndex].text = newText;
+    if (newTaskText !== null && newTaskText.trim() !== "") {
+        tasks[taskIndex].text = newTaskText.trim();
         saveTasks(tasks);
+        renderTasks();
     }
-    renderTasks();
 }
 
 /* Deleting a task */
 function deleteTask(taskId) {
-    let tasks = getTasks();
-    tasks = tasks.filter(task => task.id !== taskId);
+    let tasks = getTasks().filter(task => task.id !== taskId);
     saveTasks(tasks);
     renderTasks();
 }
 
-/* Retrieving tasks from local storage */
+/* Retrieves tasks from local storage */
 function getTasks() {
     return JSON.parse(localStorage.getItem("tasks")) || [];
 }
 
-/* Saving tasks to local storage */
+/* Saves tasks to local storage */
 function saveTasks(tasks) {
     localStorage.setItem("tasks", JSON.stringify(tasks));
 }
 
-/* Loading tasks on page load */
+/* Loads tasks on page load */
 function loadTasks() {
     renderTasks();
 }
 
-/* Clearing all tasks */
+/* Clears all tasks */
 function clearAllTasks() {
-    localStorage.removeItem("tasks");
-    renderTasks();
+    if (confirm("Are you sure you want to delete all tasks?")) {
+        localStorage.removeItem("tasks");
+        renderTasks();
+    }
 }
