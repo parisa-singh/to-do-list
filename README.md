@@ -1,65 +1,62 @@
-# To-Do List App
+# 📝 To-Do List App  
 
-A simple and aesthetic To-Do List app with functionalities to add, edit, delete, and manage tasks with due dates and times. The app uses localStorage to persist tasks across sessions, ensuring that tasks remain available even after closing the browser.
+A simple, elegant, and efficient To-Do List app designed to help you manage your tasks effortlessly. With features like task due dates, editing, sorting, and localStorage persistence, this app ensures that you stay organized and never lose track of your tasks—even after closing your browser.  
 
-## Features
+## ✨ Features  
 
-✔️ Add new tasks with due date and time
-✔️ Edit tasks dynamically and update task details
-✔️ Mark tasks as completed (strike-through effect)
-✔️ Delete tasks when no longer needed
-✔️ Sort tasks by due date automatically
-✔️ Persistent data storage using localStorage
-✔️ Minimal, responsive, and aesthetic UI
+✔️ **Add Tasks** – Create new tasks with optional due dates and times  
+✔️ **Edit Tasks** – Modify task details dynamically  
+✔️ **Mark as Completed** – Strike-through effect for completed tasks  
+✔️ **Delete Tasks** – Remove tasks permanently  
+✔️ **Sort by Due Date** – Tasks are automatically sorted for better tracking  
+✔️ **Persistent Storage** – Uses `localStorage` to keep tasks saved across sessions  
+✔️ **Minimalist UI** – Clean, responsive, and easy-to-use interface  
 
-## Technologies Used
+## 🚀 Technologies Used  
 
-- **HTML** - Structure of the app
-- **CSS** - Styling for a clean and responsive UI
-- **JavaScript** - Functionality, task management, and localStorage handling
+- **HTML** – Provides the app's structure  
+- **CSS** – Ensures a modern, responsive, and aesthetic UI  
+- **JavaScript** – Manages task functionality and local storage  
 
-## File Structure
+## 📂 File Structure  
 
 ```
 📂 To-Do List App
-├── index.html      # Main structure of the app
-├── styles.css      # Styling for the UI
-├── script.js       # JavaScript for interactivity
-└── README.md       # Project documentation
-```
+├── index.html       # Main structure of the app
+├── styles.css       # Styling for the UI
+├── script.js        # JavaScript for interactivity and localStorage handling
+└── README.md        # Project documentation
+```  
 
-## How to Use
+## 📌 How to Use  
 
-1. Open index.html in a browser`.
-2. Enter a task name in the input field.
-3. Optional to set a due date and time for better task tracking.
-4. Click the 'Add' button to add the task.
-5. The task will appear in the list with Edit and Delete options.
-6. Click 'Edit' to modify the task name or details.
-7. Click 'Delete' to remove a task permanently.
-8. Tasks are saved automatically in localStorage and persist even after refreshing the page.
+1. **Open** `index.html` in a browser.  
+2. **Enter** a task name in the input field.  
+3. **(Optional)** Set a due date and time for better organization.  
+4. **Click** the 'Add' button to create a task.  
+5. **Manage tasks**:  
+   - Click **Edit** to modify task details.  
+   - Click **Delete** to remove a task permanently.  
+   - Click **on a task** to mark it as completed (strikethrough effect).  
+6. **Refresh-proof**: Tasks are automatically saved in `localStorage`, so they persist even after reloading the page.  
 
-## Installation
+## ⚡ Installation  
 
-No installation is required! Just follow these steps:
+No installation needed! Simply:  
 
-1. Download or clone the repository.
-2. Open `index.html` in any web browser.
-3. Start adding tasks! 🎯
+1. **Download** or **clone** the repository.  
+2. **Open** `index.html` in any web browser.  
+3. Start organizing your tasks! 🎯  
 
-## Preview
+## 🔍 Preview  
 
-![To-Do List Preview](./to-do%20list%20screenshot.png)
+![To-Do List Preview](./screenshot.png)  
 
-## MIT License
+## 📜 License  
 
-This project is licensed under the MIT License, meaning you are free to use, modify, and distribute it.
+This project is licensed under the **MIT License**, allowing you to use, modify, and distribute it freely.  
 
+## 🤝 Contributing  
 
-## Contributing
-Want to improve this project? Feel free to fork it and submit a pull request! Contributions are always welcome. 💡
-
-
----
-
+Have ideas to enhance the project? Fork the repository and submit a pull request! Contributions are always welcome. 💡  
 

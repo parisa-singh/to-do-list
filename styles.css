@@ -14,7 +14,7 @@ body {
     align-items: center;
     height: 100vh;
     width: 100vw;
-    background: linear-gradient(to right, #a18cd1, #fbc2eb);
+    background: linear-gradient(to right, #ff5b5b, #5e5bff);
     margin: 0;
 }
 
@@ -44,9 +44,9 @@ body {
     padding: 20px;
 }
 
-h1 {
+.left-section h1 {
     font-size: 24px;
-    color: #5a189a;
+    color: #5e5bff;
     text-align: center;
 }
 
@@ -68,7 +68,7 @@ input {
 }
 
 input:focus {
-    border-color: #a18cd1;
+    border-color: #5e5bff;
     box-shadow: 0px 0px 8px rgba(161, 140, 209, 0.5);
 }
 
@@ -82,14 +82,14 @@ input:focus {
 
 .date-time-section label {
     font-weight: bold;
-    color: #5a189a;
+    color: #5e5bff;
 }
 
 button {
     width: 100%;
     padding: 12px;
     border: none;
-    background-color: #5a189a;
+    background-color: #5e5bff;
     color: white;
     border-radius: 8px;
     font-size: 16px;
@@ -98,12 +98,12 @@ button {
 }
 
 button:disabled {
-    background-color: #b3b3b3;
+    background-color: #9c9c9c;
     cursor: not-allowed;
 }
 
 button:hover {
-    background-color: #461279;
+    background-color: #323189;
 }
 
 /* Right Section - Task List */
@@ -114,6 +114,12 @@ button:hover {
     align-items: center;
     padding: 20px;
     width: 100%;
+}
+
+.right-section h1 {
+    font-size: 24px;
+    color: #ff5b5b;
+    text-align: center;
 }
 
 #taskList {
@@ -142,7 +148,7 @@ li {
 
 li:hover {
     transform: scale(1.02);
-    background: #e8defb;
+    background: #ff5b5b44;
 }
 
 .task-text {
@@ -152,13 +158,13 @@ li:hover {
 
 .task-date {
     font-size: 12px;
-    color: gray;
+    color: rgb(106, 106, 106);
     text-align: right;
 }
 
 /* Buttons inside tasks */
 .task-buttons {
-    display: none; /* Initially hidden */
+    display: none; 
     gap: 10px;
     height: 40px;
     position: absolute;
@@ -166,7 +172,7 @@ li:hover {
 }
 
 li:hover .task-buttons {
-    display: flex; /* Show only on hover */
+    display: flex; 
 }
 
 /* Styling for action buttons */
@@ -175,7 +181,7 @@ li:hover .task-buttons {
     padding: 8px 12px;
     cursor: pointer;
     border-radius: 5px;
-    font-size: 14px;
+    font-size: 18px;
     transition: all 0.3s ease-in-out;
     width: 40px;
     height: 40px;
@@ -183,30 +189,30 @@ li:hover .task-buttons {
 }
 
 .complete {
-    background: #007bff;
+    background: #02b914;
     color: white;
 }
 
 .edit {
-    background: #ffc107;
+    background: #fabb00;
     color: white;
 }
 
 .delete {
-    background: #dc3545;
+    background: #c82333;
     color: white;
 }
 
 .complete:hover {
-    background: #0056b3;
+    background: #02850f;
 }
 
 .edit:hover {
-    background: #e0a800;
+    background: #d7a201;
 }
 
 .delete:hover {
-    background: #c82333;
+    background: #861823;
 }
 
 /* Completed Task Styling */

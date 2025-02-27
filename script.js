@@ -69,9 +69,9 @@ function renderTasks() {
         li.innerHTML = `
             <span class="task-text ${task.completed ? 'completed-task' : ''}">${task.text}</span>
             <div class="task-buttons">
-                <button class="complete">${task.completed ? "🔄" : "✔️"}</button>
-                <button class="edit">✏️</button>
-                <button class="delete">🗑️</button>
+                <button class="complete">${task.completed ? "<<" : "☑"}</button>
+                <button class="edit">✎</button>
+                <button class="delete">⊘</button>
             </div>
             <span class="task-date"><strong>Due:</strong> ${task.dueTime} , ${task.dueDate}</span>
         `;
